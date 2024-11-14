@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { AccountInfo, ParsedAccountData, PublicKey } from "@solana/web3.js";
-import { TokenChart } from "./TokenChart";
+import { AutoGridChart } from "./AutoGridChart";
 
 const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
@@ -43,9 +43,9 @@ export const TokenList = () => {
   if (!publicKey) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {tokens.slice(1, 3).map((token, index) => (
-        <TokenChart
+    <div className="h-full grid grid-cols-auto-fit gap-4 p-4 overflow-auto">
+      {tokens.map((token, index) => (
+        <AutoGridChart
           key={index}
           mintAddress={token.account.data.parsed.info.mint}
           amount={token.account.data.parsed.info.tokenAmount.uiAmount}
