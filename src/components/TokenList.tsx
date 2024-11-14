@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { AccountInfo, ParsedAccountData, PublicKey } from "@solana/web3.js";
+import { TokenChart } from "./TokenChart";
 
 const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
@@ -42,20 +43,14 @@ export const TokenList = () => {
   if (!publicKey) return null;
 
   return (
-    <div className="mt-6">
-      <h2 className="text-xl font-semibold mb-4">Your Tokens</h2>
-      <div className="space-y-2">
-        {tokens.map((token, index) => (
-          <div key={index} className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm">
-              Mint: {token.account.data.parsed.info.mint}
-            </p>
-            <p className="text-sm">
-              Amount: {token.account.data.parsed.info.tokenAmount.uiAmount}
-            </p>
-          </div>
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {tokens.slice(1, 3).map((token, index) => (
+        <TokenChart
+          key={index}
+          mintAddress={token.account.data.parsed.info.mint}
+          amount={token.account.data.parsed.info.tokenAmount.uiAmount}
+        />
+      ))}
     </div>
   );
 };
